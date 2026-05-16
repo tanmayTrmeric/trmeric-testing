@@ -1,0 +1,7 @@
+node_modules/
+reports/
+tests/.auth/
+.env
+test-results/
+blob-report/
+playwright/.cache/
