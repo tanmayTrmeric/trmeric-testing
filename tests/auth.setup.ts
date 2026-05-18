@@ -21,10 +21,13 @@ import { ALL_ROLES, isRoleConfigured, getFallbackAuthFile } from './helpers/role
 setup('Auth: Token injection (if configured)', async ({ page, context }) => {
   setup.setTimeout(0);
 
-  const token = process.env.TRMERIC_AUTH_TOKEN || '';
+  const token = (process.env.TRMERIC_AUTH_TOKEN || '').trim();
   if (!token) {
-    // No token — skip this, browser login will handle it
-    await page.goto('/', { waitUntil: 'domcontentloaded' }).catch(() => {});
+    // No token — browser login per role will handle auth.
+    // Still create a minimal user.json so tests don't crash with ENOENT
+    // if no role credentials are configured either.
+    console.log('⏭️  No TRMERIC_AUTH_TOKEN set — browser login will run for configured roles.\n');
+    await page.goto('/sign-in', { waitUntil: 'domcontentloaded' }).catch(() => {});
     await context.storageState({ path: getFallbackAuthFile() });
     return;
   }

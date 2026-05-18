@@ -14,7 +14,7 @@ import mockData from '../mocks/resource-requests.json';
  *   - You want to test specific edge cases (0 results, errors, etc.)
  *
  * How it works:
- *   page.route('**/api/endpoint') intercepts the browser's HTTP request
+ *   page.route('**\/api/endpoint') intercepts the browser HTTP request
  *   and returns our mock JSON instead of hitting the real backend.
  *
  * Mock data lives in: tests/mocks/*.json

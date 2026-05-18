@@ -1,4 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
+
+// Load .env file so credentials and config are available
+dotenv.config();
 
 /**
  * Trmeric Platform Testing Framework — Playwright Configuration
@@ -48,6 +52,10 @@ export default defineConfig({
     ['html', { open: 'never', outputFolder: `reports/${ENV}` }],
     ['list'],
     ['json', { outputFile: `reports/${ENV}-results.json` }],
+    ['./tests/reporters/summary-reporter.ts', {
+      webhookUrl: process.env.SLACK_WEBHOOK_URL || '',
+      outputDir: 'reports',
+    }],
   ],
 
   timeout: 60_000,
@@ -116,6 +124,42 @@ export default defineConfig({
       dependencies: ['auth-setup'],
       use: {
         ...devices['Desktop Chrome'],
+        channel: 'chrome',
+        storageState: './tests/.auth/user.json',
+      },
+    },
+
+    // ── Accessibility ────────────────────────────────────
+    {
+      name: 'a11y',
+      testMatch: /a11y\/.*\.spec\.ts/,
+      dependencies: ['auth-setup'],
+      use: {
+        ...devices['Desktop Chrome'],
+        channel: 'chrome',
+        storageState: './tests/.auth/user.json',
+      },
+    },
+
+    // ── Responsive — Tablet ──────────────────────────────
+    {
+      name: 'tablet',
+      testMatch: /platform\/.*\.spec\.ts/,
+      dependencies: ['auth-setup'],
+      use: {
+        ...devices['iPad Pro 11'],
+        channel: 'chrome',
+        storageState: './tests/.auth/user.json',
+      },
+    },
+
+    // ── Responsive — Mobile ──────────────────────────────
+    {
+      name: 'mobile',
+      testMatch: /smoke\/.*\.spec\.ts/,
+      dependencies: ['auth-setup'],
+      use: {
+        ...devices['Pixel 7'],
         channel: 'chrome',
         storageState: './tests/.auth/user.json',
       },

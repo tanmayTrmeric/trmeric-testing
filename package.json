@@ -14,32 +14,39 @@
     "test:report": "npx playwright show-report reports/%TRMERIC_ENV%",
     "test:headed": "npx playwright test --project=platform --headed",
     "test:debug": "npx playwright test --project=platform --debug",
-
     "dev": "set TRMERIC_ENV=dev&& npx playwright test --project=smoke --project=platform",
     "dev:smoke": "set TRMERIC_ENV=dev&& npx playwright test --project=smoke",
     "dev:full": "set TRMERIC_ENV=dev&& npx playwright test --project=smoke --project=platform --project=user-stories",
     "dev:ui": "set TRMERIC_ENV=dev&& npx playwright test --project=platform --ui",
     "dev:report": "npx playwright show-report reports/dev",
-
     "qa": "set TRMERIC_ENV=qa&& npx playwright test --project=smoke --project=platform",
     "qa:smoke": "set TRMERIC_ENV=qa&& npx playwright test --project=smoke",
     "qa:full": "set TRMERIC_ENV=qa&& npx playwright test --project=smoke --project=platform --project=user-stories",
     "qa:report": "npx playwright show-report reports/qa",
-
     "eu": "set TRMERIC_ENV=eu&& npx playwright test --project=smoke --project=platform",
     "eu:smoke": "set TRMERIC_ENV=eu&& npx playwright test --project=smoke",
     "eu:report": "npx playwright show-report reports/eu",
-
     "prod:smoke": "set TRMERIC_ENV=prod&& npx playwright test --project=smoke",
     "prod:report": "npx playwright show-report reports/prod",
-
-    "story:new": "echo Copy tests/user-stories/_TEMPLATE.spec.ts and rename for your VE ticket"
+    "story:new": "echo Copy tests/user-stories/_TEMPLATE.spec.ts and rename for your VE ticket",
+    "test:a11y": "npx playwright test --project=a11y",
+    "test:tablet": "npx playwright test --project=tablet",
+    "test:mobile": "npx playwright test --project=mobile",
+    "test:responsive": "npx playwright test --project=tablet --project=mobile",
+    "test:full": "npx playwright test --project=smoke --project=platform --project=visual --project=user-stories --project=a11y"
   },
-  "keywords": ["trmeric", "e2e", "playwright", "testing", "multi-instance"],
+  "keywords": [
+    "trmeric",
+    "e2e",
+    "playwright",
+    "testing",
+    "multi-instance"
+  ],
   "author": "Trmeric Engineering",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "@playwright/test": "^1.60.0"
+    "@playwright/test": "^1.60.0",
+    "dotenv": "^17.4.2"
   }
 }
