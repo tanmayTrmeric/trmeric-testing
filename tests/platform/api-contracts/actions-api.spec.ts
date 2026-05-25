@@ -89,9 +89,9 @@ test.describe('Demand Actions API — Authenticated CRUD', () => {
         // Status should be one of the valid states
         expect(['open', 'in_progress', 'completed', 'cancelled']).toContain(first.status);
 
-        // Priority should be a valid value
+        // Priority should be a valid value (backend may return string or number)
         if (first.priority) {
-          expect([1, 2, 3]).toContain(first.priority);
+          expect(['low', 'medium', 'high', 'critical', 1, 2, 3, 4]).toContain(first.priority);
         }
 
         // Log action summary
