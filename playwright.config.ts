@@ -204,6 +204,23 @@ export default defineConfig({
         storageState: './tests/.auth/user.json',
       },
     },
+
+    // ═══════════════════════════════════════════════════════
+    // LIVE DEMO — Full UI walkthrough for stakeholder demos
+    // Navigates everywhere, clicks everything, visual proof
+    // Command: npm run demo
+    // ═══════════════════════════════════════════════════════
+    {
+      name: 'demo',
+      testMatch: /platform\/demo\/.*\.spec\.ts/,
+      dependencies: ['auth-setup'],
+      use: {
+        ...devices['Desktop Chrome'],
+        channel: 'chrome',
+        storageState: './tests/.auth/user.json',
+        video: 'on',
+      },
+    },
   ],
 
   outputDir: `./reports/${ENV}-results`,

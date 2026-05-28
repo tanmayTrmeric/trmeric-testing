@@ -39,7 +39,7 @@ setup('Auth: Token injection (if configured)', async ({ page, context }) => {
     path: '/',
   }]);
 
-  await page.goto('/actionhub/my-hub', { waitUntil: 'domcontentloaded' });
+  await page.goto('/actionhub/actions', { waitUntil: 'domcontentloaded' });
   await page.waitForTimeout(5000);
 
   // Validate token worked — we should NOT be on the login page

@@ -46,27 +46,31 @@ console.log(`\n🔧 Testing: ${ENV.toUpperCase()} instance`);
 console.log(`   Frontend: ${URLS.frontend}`);
 console.log(`   Backend:  ${URLS.backend}\n`);
 
-// ── Frontend Routes ─────────────────────────────────────────
+// ── Frontend Routes (from App.jsx route config) ─────────────
 export const ROUTES = {
   login: '/sign-in',
-  hub: '/actionhub',
-  myHub: '/actionhub/my-hub',
-  demands: '/actionhub/demands',
-  projects: '/actionhub/view-projects',
+  hub: '/actionhub',                               // redirects to /actionhub/actions
+  actions: '/actionhub/actions',
+  demands: '/actionhub/my-roadmaps',
+  createRoadmap: '/actionhub/create-roadmap',
+  projects: '/actionhub/my-projects',
   portfolios: '/actionhub/view-portfolios',
   potential: '/actionhub/potential',
   potentialApprovals: '/actionhub/potential-approvals',
-  actions: '/actionhub/actions',
   pinboard: '/actionhub/pinboard',
-  createRoadmap: '/actionhub/create-roadmap',
-  myRoadmaps: '/actionhub/my-roadmaps',
   missions: '/actionhub/missions',
   ideaPad: '/actionhub/idea-pad',
-  createPortfolio: '/actionhub/create-portfolio',
   agents: '/actionhub/agents',
   tango: '/actionhub/tango',
   integration: '/actionhub/integration',
   adminConsole: '/actionhub/admin-console',
+  createPortfolio: '/actionhub/create-portfolio',
+  programs: '/actionhub/my-programs',
+  profile: '/actionhub/my-profile',
+  providers: '/actionhub/my-providers',
+
+  /** Build demand live URL with roadmap ID */
+  demandLive: (roadmapId: number | string) => `/actionhub/missions?roadmap_id=${roadmapId}`,
 };
 
 // ── Backend API Endpoints ───────────────────────────────────
@@ -193,3 +197,83 @@ export const API = {
   tenantReleaseCycles: '/api/tenant/release-cycles',
   customFieldList: '/api/tenant/custom-field/list',
 };
+
+// ── ALL endpoints as flat array (for bulk contract tests) ────
+export const ALL_ENDPOINTS: { name: string; method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'; path: string }[] = [
+  // Auth
+  { name: 'login', method: 'POST', path: API.login },
+  { name: 'userInfo', method: 'GET', path: API.userInfo },
+  { name: 'tenantUsers', method: 'GET', path: API.tenantUsers },
+  { name: 'portfolioUsers', method: 'GET', path: API.portfolioUsers },
+  { name: 'orgRoles', method: 'GET', path: API.orgRoles },
+
+  // Capacity
+  { name: 'getResources', method: 'POST', path: API.getResources },
+  { name: 'getResourceDetails', method: 'POST', path: API.getResourceDetails },
+  { name: 'getResourceKpiSummary', method: 'GET', path: API.getResourceKpiSummary },
+  { name: 'getResourceHomeSummary', method: 'GET', path: API.getResourceHomeSummary },
+  { name: 'getResourceMatchmaking', method: 'GET', path: API.getResourceMatchmaking },
+  { name: 'portfolioResourceManagers', method: 'GET', path: API.portfolioResourceManagers },
+  { name: 'addResource', method: 'POST', path: API.addResource },
+  { name: 'updateResource', method: 'POST', path: API.updateResource },
+  { name: 'createResourceRequest', method: 'POST', path: API.createResourceRequest },
+  { name: 'listResourceRequests', method: 'GET', path: API.listResourceRequests },
+  { name: 'allocateResource', method: 'POST', path: API.allocateResource },
+  { name: 'upgradeLockType', method: 'POST', path: API.upgradeLockType },
+  { name: 'releaseResource', method: 'POST', path: API.releaseResource },
+  { name: 'rejectResourceRequest', method: 'POST', path: API.rejectResourceRequest },
+  { name: 'indicateResourceAvailable', method: 'POST', path: API.indicateResourceAvailable },
+  { name: 'getPendingTimelineChanges', method: 'GET', path: API.getPendingTimelineChanges },
+  { name: 'approveTimelineChange', method: 'POST', path: API.approveTimelineChange },
+  { name: 'rejectTimelineChange', method: 'POST', path: API.rejectTimelineChange },
+  { name: 'getAllocationChanges', method: 'GET', path: API.getAllocationChanges },
+  { name: 'getResourceGroups', method: 'GET', path: API.getResourceGroups },
+  { name: 'createGroup', method: 'POST', path: API.createGroup },
+  { name: 'exportResourceRequests', method: 'POST', path: API.exportResourceRequests },
+  { name: 'holidays', method: 'GET', path: API.holidays },
+  { name: 'unavailability', method: 'GET', path: API.unavailability },
+  { name: 'allocateResourceToProject', method: 'POST', path: API.allocateResourceToProject },
+  { name: 'bulkReleaseResources', method: 'POST', path: API.bulkReleaseResources },
+  { name: 'lockResource', method: 'POST', path: API.lockResource },
+
+  // Demand Actions
+  { name: 'createDemandAction', method: 'POST', path: API.createDemandAction },
+  { name: 'listDemandActions', method: 'GET', path: API.listDemandActions },
+  { name: 'listActions', method: 'GET', path: API.listActions },
+  { name: 'createAction', method: 'POST', path: API.createAction },
+
+  // Demands / Roadmap
+  { name: 'createDemand', method: 'POST', path: API.createDemand },
+  { name: 'listDemands', method: 'GET', path: API.listDemands },
+  { name: 'listDemandsByPortfolio', method: 'GET', path: API.listDemandsByPortfolio },
+  { name: 'listMyApprovals', method: 'GET', path: API.listMyApprovals },
+  { name: 'listApprovedDemands', method: 'GET', path: API.listApprovedDemands },
+  { name: 'listArchivedDemands', method: 'GET', path: API.listArchivedDemands },
+  { name: 'searchDemands', method: 'GET', path: API.searchDemands },
+  { name: 'bulkDemandTransition', method: 'POST', path: API.bulkDemandTransition },
+  { name: 'portfolioAccountability', method: 'GET', path: API.portfolioAccountability },
+  { name: 'listDemandKpis', method: 'POST', path: API.listDemandKpis },
+  { name: 'addDemandKpi', method: 'POST', path: API.addDemandKpi },
+
+  // Entity Workflow
+  { name: 'workflowDefinitions', method: 'GET', path: API.workflowDefinitions },
+  { name: 'workflowStatuses', method: 'GET', path: API.workflowStatuses },
+  { name: 'fieldAccessPolicies', method: 'GET', path: API.fieldAccessPolicies },
+
+  // Authorization
+  { name: 'getOrgRoles', method: 'GET', path: API.getOrgRoles },
+  { name: 'getOrgUserRole', method: 'GET', path: API.getOrgUserRole },
+  { name: 'approvalUserList', method: 'GET', path: API.approvalUserList },
+  { name: 'createApprovalRequest', method: 'POST', path: API.createApprovalRequest },
+  { name: 'approveRejectRequest', method: 'POST', path: API.approveRejectRequest },
+
+  // Projects
+  { name: 'listProjects', method: 'GET', path: API.listProjects },
+  { name: 'createProject', method: 'POST', path: API.createProject },
+  { name: 'listPortfolios', method: 'GET', path: API.listPortfolios },
+  { name: 'addPortfolio', method: 'POST', path: API.addPortfolio },
+
+  // Tenant
+  { name: 'tenantReleaseCycles', method: 'GET', path: API.tenantReleaseCycles },
+  { name: 'customFieldList', method: 'GET', path: API.customFieldList },
+];

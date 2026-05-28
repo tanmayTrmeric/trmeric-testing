@@ -25,6 +25,9 @@
     "deploy:report": "npx playwright show-report reports/dev",
     "deploy:verdict": "node -e \"const r=require('./reports/'+( process.env.TRMERIC_ENV||'dev')+'-deploy-verdict.json'); console.log(r.verdict, r.results.passRate+'%%'); process.exit(r.deployable?0:1)\"",
 
+    "demo": "npx playwright test --project=demo --headed",
+    "demo:record": "npx playwright test --project=demo --headed --video on",
+
     "dev": "set TRMERIC_ENV=dev&& npx playwright test --project=smoke --project=platform",
     "dev:smoke": "set TRMERIC_ENV=dev&& npx playwright test --project=smoke",
     "dev:full": "set TRMERIC_ENV=dev&& npx playwright test --project=smoke --project=platform --project=user-stories",
